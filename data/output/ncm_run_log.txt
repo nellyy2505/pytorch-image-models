@@ -38,10 +38,10 @@ E4  raw, Euclidean                        10 per class: val top-1 0.9453
 E4  raw, Euclidean                        25 per class: val top-1 0.9458
 E4  raw, Euclidean                        50 per class: val top-1 0.9465
 E4  raw, Euclidean                       100 per class: val top-1 0.9464
-raw, Euclidean trained on the full training set in 175 s
+raw, Euclidean trained on the full training set in 174 s
 X_test1 shape (50000, 1024) X_test2 shape (10000, 1024)
          model   set  rows   top1   top5  predict_s
-raw, Euclidean   val 50000 0.9464 0.9958     4.1544
-raw, Euclidean test1 50000 0.8993 0.9880     3.0379
-raw, Euclidean test2 10000 0.8267 0.9610     0.6103
+raw, Euclidean   val 50000 0.9464 0.9958     4.3104
+raw, Euclidean test1 50000 0.8993 0.9880     2.6507
+raw, Euclidean test2 10000 0.8267 0.9610     0.4673
 raw, Euclidean: top-1 gap (test set 1 - test set 2) = 7.3 points
