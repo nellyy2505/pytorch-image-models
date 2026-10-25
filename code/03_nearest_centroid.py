@@ -2,7 +2,7 @@
 #
 # Each class is represented by the mean (centroid) of its training features.
 # A new image gets the class of the closest centroid.
-# Variants are compared on our validation split (train_small -> val):
+# Variants are compared on our validation set (train_small -> val):
 #   E1 feature normalisation, E2 PCA, E3 LDA (shared within-class covariance), E4 learning curve.
 # The chosen variant (the simplest one within one standard error of the best) and the raw baseline
 # are then trained on the full training set and scored once on test set 1 (ImageNet val) and test set 2 (ImageNetV2).
@@ -33,7 +33,7 @@ PER_CLASS = [2, 5, 10, 25, 50, 100]
 
 
 # 1. Load the data
-# only training data and our validation split here; the test sets are loaded in section 5
+# only training data and our validation set here; the test sets are loaded in section 5
 X_train = np.load(PROC / "train_small_X.npy")
 y_train = np.load(PROC / "train_small_y.npy").astype(int)
 X_val = np.load(PROC / "val_X.npy")
@@ -84,7 +84,7 @@ def accuracy(top5, y):
     return top1_acc, top5_acc
 
 
-# 3. Try the variants on our validation split
+# 3. Try the variants on our validation set
 # each variant = a feature transform (fitted on train_small only) + Euclidean or cosine distance
 experiments = []
 variants = {}
@@ -138,6 +138,7 @@ experiments.to_csv(OUT / "ncm_experiments.csv", index=False)
 # choose the model: the simplest variant within one standard error of the best val accuracy
 # (smaller differences are just noise from which 50,000 images happen to be in val)
 # the variants were run from simplest (raw, Euclidean) to most complex, so the first one in the table wins
+# this is conservative: two models scored on the same images differ by less noise than one accuracy's standard error
 top = experiments.val_top1.max()
 std_error = np.sqrt(top * (1 - top) / len(y_val))
 good_enough = experiments[experiments.val_top1 >= top - std_error]
@@ -235,7 +236,7 @@ plt.xlim(e1.val_top1.min() - 0.05, e1.val_top1.max() + 0.04)
 plt.title("E1: feature normalisation")
 plt.xlabel("validation top-1 accuracy")
 plt.savefig(OUT / "fig_ncm_normalisation.png", dpi=150, bbox_inches="tight")
-plt.show()
+plt.close()
 
 # E2 PCA
 e2 = experiments[experiments.experiment == "E2"]
@@ -252,7 +253,7 @@ plt.xlabel("principal components kept")
 plt.ylabel("validation top-1 accuracy")
 plt.legend(frameon=False)
 plt.savefig(OUT / "fig_ncm_pca.png", dpi=150, bbox_inches="tight")
-plt.show()
+plt.close()
 
 # E3 LDA shrinkage
 e3 = experiments[experiments.experiment == "E3"]
@@ -265,7 +266,7 @@ plt.xlabel("shrinkage (1 = identity, i.e. no LDA)")
 plt.ylabel("validation top-1 accuracy")
 plt.legend(frameon=False)
 plt.savefig(OUT / "fig_ncm_lda.png", dpi=150, bbox_inches="tight")
-plt.show()
+plt.close()
 
 # E4 learning curve (last point = full training set)
 plt.figure(figsize=(6.2, 3.2))
@@ -278,7 +279,7 @@ plt.xlabel("training images per class")
 plt.ylabel("validation top-1 accuracy")
 plt.legend(frameon=False)
 plt.savefig(OUT / "fig_ncm_learning_curve.png", dpi=150, bbox_inches="tight")
-plt.show()
+plt.close()
 
 # final accuracy on the three sets
 x = np.arange(3)
@@ -290,13 +291,13 @@ for j, (name, color) in enumerate(zip(models, ("#2a78d6", "#eb6834"))):
     plt.bar(x + shift, r.top1, width, label=name, color=color)
     for i, v in enumerate(r.top1):
         plt.text(i + shift, v + 0.01, "%.1f%%" % (100 * v), ha="center", fontsize=9)
-plt.xticks(x, ["our validation split", "test set 1 (ImageNet val)", "test set 2 (ImageNetV2)"], fontsize=9)
+plt.xticks(x, ["our validation set", "test set 1 (ImageNet val)", "test set 2 (ImageNetV2)"], fontsize=9)
 plt.ylim(0, 1.15)
 plt.title("Nearest centroid trained on the full training set")
 plt.ylabel("top-1 accuracy")
 plt.legend(frameon=False, loc="upper center", ncol=2, fontsize=9)
 plt.savefig(OUT / "fig_ncm_test_accuracy.png", dpi=150, bbox_inches="tight")
-plt.show()
+plt.close()
 
 # how close is each image to the centroid of its own class? (cosine similarity, chosen model)
 # a histogram per set, like the pixel histograms in Lab 8: lower similarity = less typical images
@@ -311,4 +312,4 @@ plt.xlabel("cosine similarity")
 plt.ylabel("density")
 plt.legend(frameon=False)
 plt.savefig(OUT / "fig_ncm_centroid_similarity.png", dpi=150, bbox_inches="tight")
-plt.show()
+plt.close()
