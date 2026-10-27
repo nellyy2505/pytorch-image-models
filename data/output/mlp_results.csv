@@ -1,3 +1,0 @@
-model,test_set,rows,top1,top5,train_seconds,predict_seconds
-MLP,test set 1 (ImageNet val),50000,0.89428,0.98572,82.15487313270569,0.09097099304199219
-MLP,test set 2 (ImageNetV2),10000,0.8065,0.9475,82.15487313270569,0.019231081008911133

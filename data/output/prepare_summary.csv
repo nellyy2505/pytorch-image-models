@@ -1,6 +1,6 @@
-set,rows,features,classes,min_per_class,max_per_class,nan_values,rows_also_in_train
-train_full,1281167,1024,1000,732,1300,0,
-train_small,100000,1024,1000,100,100,0,
-val,50000,1024,1000,50,50,0,
-test1,50000,1024,1000,50,50,0,796
-test2,10000,1024,1000,10,10,0,0
+set,rows,features,classes,min_per_class,max_per_class
+train_full,1281167,1024,1000,732,1300
+train_small,100000,1024,1000,100,100
+val,50000,1024,1000,50,50
+test1,50000,1024,1000,50,50
+test2,10000,1024,1000,10,10

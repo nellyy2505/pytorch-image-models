@@ -1,3 +1,0 @@
-seed,mode,training_rows,alpha,epoch,val_top1,val_top5,seconds,best_so_far
-7,n5,5000,1e-05,1,0.6948,0.81436,2.5986930999788456,True
-7,n5,5000,1e-05,2,0.87504,0.94484,2.2699337999802083,True

@@ -1,7 +1,0 @@
-epoch,val_top1,val_atypical_top1,run
-1,0.947,0.6732,"R1 weighting (beta=4, gamma=0)"
-2,0.94628,0.6782,"R1 weighting (beta=4, gamma=0)"
-3,0.94566,0.682,"R1 weighting (beta=4, gamma=0)"
-4,0.94568,0.6792,"R1 weighting (beta=4, gamma=0)"
-5,0.94426,0.6696,"R1 weighting (beta=4, gamma=0)"
-6,0.9448,0.6676,"R1 weighting (beta=4, gamma=0)"

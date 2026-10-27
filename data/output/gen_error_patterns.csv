@@ -1,88 +1,30 @@
-classifier,true_class,true_name,predicted_as,predicted_name,count,frac_of_errors
-Regularised linear,809,soup bowl,925,consomme,7,0.7777777777777778
-Regularised linear,809,soup bowl,969,eggnog,1,0.1111111111111111
-Regularised linear,809,soup bowl,923,plate,1,0.1111111111111111
-Regularised linear,201,silky terrier,193,Australian terrier,5,0.5555555555555556
-Regularised linear,201,silky terrier,187,Yorkshire terrier,3,0.3333333333333333
-Regularised linear,201,silky terrier,703,park bench,1,0.1111111111111111
-Regularised linear,859,toaster,766,rotisserie,4,0.6666666666666666
-Regularised linear,859,toaster,651,microwave,1,0.16666666666666666
-Regularised linear,859,toaster,415,bakery,1,0.16666666666666666
-Regularised linear,135,limpkin,128,black stork,3,0.6
-Regularised linear,135,limpkin,134,crane,1,0.2
-Regularised linear,135,limpkin,131,little blue heron,1,0.2
-Regularised linear,218,Welsh springer spaniel,217,English springer,4,0.8
-Regularised linear,218,Welsh springer spaniel,212,English setter,1,0.2
-Regularised linear,916,web site,662,modem,2,0.4
-Regularised linear,916,web site,692,packet,1,0.2
-Regularised linear,916,web site,785,seat belt,1,0.2
-Regularised linear,532,dining table,762,restaurant,4,0.5714285714285714
-Regularised linear,532,dining table,470,candle,1,0.14285714285714285
-Regularised linear,532,dining table,923,plate,1,0.14285714285714285
-Regularised linear,56,king snake,60,night snake,4,0.6666666666666666
-Regularised linear,56,king snake,54,hognose snake,1,0.16666666666666666
-Regularised linear,56,king snake,67,diamondback,1,0.16666666666666666
-Regularised linear,738,pot,534,dishwasher,1,0.16666666666666666
-Regularised linear,738,pot,919,street sign,1,0.16666666666666666
-Regularised linear,738,pot,532,dining table,1,0.16666666666666666
-Regularised linear,497,church,663,monastery,3,0.3333333333333333
-Regularised linear,497,church,884,vault,2,0.2222222222222222
-Regularised linear,497,church,442,bell cote,2,0.2222222222222222
-Small MLP,809,soup bowl,925,consomme,5,0.5555555555555556
-Small MLP,809,soup bowl,942,butternut squash,1,0.1111111111111111
-Small MLP,809,soup bowl,926,hot pot,1,0.1111111111111111
-Small MLP,201,silky terrier,193,Australian terrier,4,0.4444444444444444
-Small MLP,201,silky terrier,187,Yorkshire terrier,3,0.3333333333333333
-Small MLP,201,silky terrier,186,Norwich terrier,1,0.1111111111111111
-Small MLP,859,toaster,766,rotisserie,3,0.6
-Small MLP,859,toaster,415,bakery,1,0.2
-Small MLP,859,toaster,651,microwave,1,0.2
-Small MLP,135,limpkin,128,black stork,4,0.6666666666666666
-Small MLP,135,limpkin,131,little blue heron,2,0.3333333333333333
-Small MLP,218,Welsh springer spaniel,217,English springer,2,0.5
-Small MLP,218,Welsh springer spaniel,215,Brittany spaniel,1,0.25
-Small MLP,218,Welsh springer spaniel,649,megalith,1,0.25
-Small MLP,916,web site,662,modem,2,0.4
-Small MLP,916,web site,481,cassette,1,0.2
-Small MLP,916,web site,680,nipple,1,0.2
-Small MLP,532,dining table,762,restaurant,3,0.5
-Small MLP,532,dining table,470,candle,1,0.16666666666666666
-Small MLP,532,dining table,923,plate,1,0.16666666666666666
-Small MLP,56,king snake,60,night snake,2,0.4
-Small MLP,56,king snake,54,hognose snake,1,0.2
-Small MLP,56,king snake,67,diamondback,1,0.2
-Small MLP,738,pot,534,dishwasher,1,0.16666666666666666
-Small MLP,738,pot,919,street sign,1,0.16666666666666666
-Small MLP,738,pot,532,dining table,1,0.16666666666666666
-Small MLP,497,church,663,monastery,3,0.3333333333333333
-Small MLP,497,church,884,vault,2,0.2222222222222222
-Small MLP,497,church,442,bell cote,2,0.2222222222222222
-Nearest centroid,809,soup bowl,925,consomme,3,0.6
-Nearest centroid,809,soup bowl,969,eggnog,1,0.2
-Nearest centroid,809,soup bowl,923,plate,1,0.2
-Nearest centroid,201,silky terrier,193,Australian terrier,4,0.4444444444444444
-Nearest centroid,201,silky terrier,187,Yorkshire terrier,4,0.4444444444444444
-Nearest centroid,201,silky terrier,703,park bench,1,0.1111111111111111
-Nearest centroid,859,toaster,766,rotisserie,3,0.5
-Nearest centroid,859,toaster,651,microwave,1,0.16666666666666666
-Nearest centroid,859,toaster,941,acorn squash,1,0.16666666666666666
-Nearest centroid,135,limpkin,128,black stork,3,0.6
-Nearest centroid,135,limpkin,132,American egret,1,0.2
-Nearest centroid,135,limpkin,131,little blue heron,1,0.2
-Nearest centroid,218,Welsh springer spaniel,217,English springer,5,0.8333333333333334
-Nearest centroid,218,Welsh springer spaniel,212,English setter,1,0.16666666666666666
-Nearest centroid,916,web site,662,modem,2,0.4
-Nearest centroid,916,web site,481,cassette,1,0.2
-Nearest centroid,916,web site,785,seat belt,1,0.2
-Nearest centroid,532,dining table,762,restaurant,3,0.375
-Nearest centroid,532,dining table,923,plate,2,0.25
-Nearest centroid,532,dining table,470,candle,1,0.125
-Nearest centroid,56,king snake,60,night snake,3,0.6
-Nearest centroid,56,king snake,67,diamondback,1,0.2
-Nearest centroid,56,king snake,62,rock python,1,0.2
-Nearest centroid,738,pot,896,washbasin,1,0.25
-Nearest centroid,738,pot,919,street sign,1,0.25
-Nearest centroid,738,pot,708,pedestal,1,0.25
-Nearest centroid,497,church,884,vault,3,0.3
-Nearest centroid,497,church,663,monastery,3,0.3
-Nearest centroid,497,church,442,bell cote,2,0.2
+true_class,true_name,predicted_as,predicted_name,count,share_of_errors
+809,soup bowl,925,consomme,7,0.7777777777777778
+809,soup bowl,969,eggnog,1,0.1111111111111111
+809,soup bowl,923,plate,1,0.1111111111111111
+859,toaster,766,rotisserie,5,0.7142857142857143
+859,toaster,651,microwave,1,0.14285714285714285
+859,toaster,415,bakery,1,0.14285714285714285
+532,dining table,762,restaurant,4,0.5
+532,dining table,470,candle,1,0.125
+532,dining table,923,plate,1,0.125
+201,silky terrier,193,Australian terrier,5,0.5555555555555556
+201,silky terrier,187,Yorkshire terrier,3,0.3333333333333333
+201,silky terrier,703,park bench,1,0.1111111111111111
+135,limpkin,128,black stork,3,0.6
+135,limpkin,134,crane,1,0.2
+135,limpkin,131,little blue heron,1,0.2
+218,Welsh springer spaniel,217,English springer,4,0.8
+218,Welsh springer spaniel,212,English setter,1,0.2
+916,web site,662,modem,2,0.4
+916,web site,481,cassette,1,0.2
+916,web site,785,seat belt,1,0.2
+204,Lhasa,155,Shih-Tzu,4,0.5
+204,Lhasa,153,Maltese dog,2,0.25
+204,Lhasa,263,Pembroke,1,0.125
+393,anemone fish,108,sea anemone,4,0.5714285714285714
+393,anemone fish,973,coral reef,2,0.2857142857142857
+393,anemone fish,119,rock crab,1,0.14285714285714285
+609,jeep,479,car wheel,2,0.2857142857142857
+609,jeep,717,pickup,1,0.14285714285714285
+609,jeep,511,convertible,1,0.14285714285714285

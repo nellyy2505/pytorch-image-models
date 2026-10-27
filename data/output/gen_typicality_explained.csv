@@ -1,4 +1,0 @@
-classifier,test1_top1,test2_top1,test2_expected_from_typicality,share_of_gap_explained
-Regularised linear,0.89856,0.8228,0.8182998000000001,1.0594007391763443
-Small MLP,0.89428,0.8065,0.8139926200000001,0.914643198906356
-Nearest centroid,0.89926,0.8267,0.81781264,1.1224829106945977

@@ -1,2 +1,0 @@
-seed,per_class,alpha,epoch,val_top1,val_top5,seconds
-7,5,0.0001,1,0.87004,0.94734,2.7019823000009637
