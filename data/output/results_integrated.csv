@@ -1,5 +1,0 @@
-method,owner,features,val_top1,test1_top1,test1_top5,test2_top1,test2_top5,script,gap_top1,test1_top1_no_dups
-Logistic regression (practice),Nelly,"EfficientFormerV2-S0, 176-d",,0.6927,0.8885,0.5704,0.7969,01_practice_classifier.py,0.1223,
-Regularised linear (A),Andrew,"EVA-02, 1024-d",0.9523,0.8986,0.9899,0.8228,0.9639,"classifier_a_linear.py, classifier_a_evaluate.py",0.0758,0.9075
-Small MLP (B),Ban,"EVA-02, 1024-d",0.9501,0.8943,0.9857,0.8065,0.9475,03_mlp_classifier.py,0.0878,0.9041
-"Nearest centroid (C), raw, Euclidean",Trung,"EVA-02, 1024-d",0.9464,0.8993,0.988,0.8267,0.961,03_nearest_centroid.py,0.0726,0.9073

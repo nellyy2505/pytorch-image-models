@@ -1,10 +1,13 @@
-# conda create -n csci946-a3 -c conda-forge --override-channels python=3.11
-# pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
-# pip install -r A3_requirements.txt
-numpy
-pandas
-scikit-learn
-matplotlib
-pyyaml
-huggingface_hub
-safetensors
+# Python 3.11. Install torch first, the CUDA build for an NVIDIA GPU (driver supporting CUDA 12.8) or the CPU build:
+#   pip install torch==2.11.0 torchvision==0.26.0 --index-url https://download.pytorch.org/whl/cu128
+#   pip install torch==2.11.0 torchvision==0.26.0 --index-url https://download.pytorch.org/whl/cpu
+# then: pip install -r A3_requirements.txt
+numpy==2.4.6
+pandas==3.0.6
+scipy==1.17.1
+scikit-learn==1.9.1
+matplotlib==3.11.2
+pillow==12.3.0
+pyyaml==6.0.3
+huggingface_hub==2.2.0
+safetensors==0.8.0

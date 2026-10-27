@@ -1,8 +1,0 @@
-model,per_class,val_top1
-"raw, Euclidean",2,0.92934
-"raw, Euclidean",5,0.94186
-"raw, Euclidean",10,0.9453
-"raw, Euclidean",25,0.94584
-"raw, Euclidean",50,0.9465
-"raw, Euclidean",100,0.94642
-"raw, Euclidean",1231,0.94644

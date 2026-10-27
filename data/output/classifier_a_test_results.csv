@@ -1,3 +1,0 @@
-test_set,rows,top1,top5,alpha,best_epoch,seed,training_rows
-test1,50000,0.89856,0.98988,1e-05,2,7,1231167
-test2,10000,0.8228,0.9639,1e-05,2,7,1231167

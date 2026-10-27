@@ -1,8 +1,10 @@
-refinement,beta,gamma,best_epoch,val_top1,val_top5,val_atypical_top1,seconds,chosen
-baseline,0.0,0.0,6,0.9476,0.99594,0.6398,42.448108434677124,False
-R1 weighting,1.0,0.0,6,0.9473,0.99604,0.641,44.1480507850647,False
-R1 weighting,2.0,0.0,6,0.94694,0.996,0.6418,44.8582329750061,False
-R1 weighting,4.0,0.0,11,0.94672,0.99594,0.6458,43.87098550796509,True
-R2 spreading,0.0,0.25,3,0.9459,0.9959,0.634,52.78338599205017,False
-R2 spreading,0.0,0.5,3,0.94484,0.99578,0.6326,52.006263971328735,False
-R2 spreading,0.0,1.0,3,0.94296,0.9956,0.6272,53.994545698165894,False
+setting,beta,gamma,kept_epoch,val_top1,val_atypical_top1,atypical_gain,gain_ci_low,gain_ci_high,meets_rule,chosen
+baseline (classifier A on train_small),0.0,0.0,10,0.95126,0.6424,,,,,False
+R1 weighting,1.0,0.0,8,0.95076,0.6444,0.002,-0.001,0.005,True,False
+R1 weighting,2.0,0.0,8,0.95074,0.6446,0.0022,-0.0012,0.0056,True,False
+R1 weighting,4.0,0.0,8,0.95054,0.645,0.0026,-0.001,0.006204999999999973,True,False
+R1 weighting,8.0,0.0,8,0.9504,0.6446,0.0022,-0.0016049999999999999,0.0064,True,False
+R1 weighting,16.0,0.0,8,0.95046,0.6456,0.0032,-0.0008,0.0072,True,True
+R2 spreading,0.0,0.25,6,0.94938,0.641,-0.0014,-0.007,0.004,True,False
+R2 spreading,0.0,0.5,10,0.95104,0.6406,-0.0018,-0.0058,0.002,True,False
+R2 spreading,0.0,1.0,8,0.94966,0.6346,-0.0078,-0.0128,-0.002795000000000027,True,False
