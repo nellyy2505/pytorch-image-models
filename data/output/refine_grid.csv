@@ -1,10 +1,11 @@
-setting,beta,gamma,kept_epoch,val_top1,val_atypical_top1,atypical_gain,gain_ci_low,gain_ci_high,meets_rule,chosen
-baseline (classifier A on train_small),0.0,0.0,10,0.95126,0.6424,,,,,False
-R1 weighting,1.0,0.0,8,0.95076,0.6444,0.002,-0.001,0.005,True,False
-R1 weighting,2.0,0.0,8,0.95074,0.6446,0.0022,-0.0012,0.0056,True,False
-R1 weighting,4.0,0.0,8,0.95054,0.645,0.0026,-0.001,0.006204999999999973,True,False
-R1 weighting,8.0,0.0,8,0.9504,0.6446,0.0022,-0.0016049999999999999,0.0064,True,False
-R1 weighting,16.0,0.0,8,0.95046,0.6456,0.0032,-0.0008,0.0072,True,True
-R2 spreading,0.0,0.25,6,0.94938,0.641,-0.0014,-0.007,0.004,True,False
-R2 spreading,0.0,0.5,10,0.95104,0.6406,-0.0018,-0.0058,0.002,True,False
-R2 spreading,0.0,1.0,8,0.94966,0.6346,-0.0078,-0.0128,-0.002795000000000027,True,False
+setting,beta,gamma,kept_epoch,val_top1,val_atypical_top1,meets_rule,atypical_gain,gain_ci_low,gain_ci_high,gain_like_for_like,like_ci_low,like_ci_high,chosen
+baseline (classifier A on train_small),0.0,0.0,10,0.95126,0.6424,,,,,,,,False
+"baseline, epoch kept by the refined rule",0.0,0.0,10,0.95126,0.6424,True,,,,,,,False
+R1 weighting,1.0,0.0,8,0.95076,0.6444,True,0.002,-0.001,0.005,0.002,-0.0012,0.0052,False
+R1 weighting,2.0,0.0,8,0.95074,0.6446,True,0.0022,-0.0012,0.0056,0.0022,-0.0008,0.0056,False
+R1 weighting,4.0,0.0,8,0.95054,0.645,True,0.0026,-0.001,0.006204999999999973,0.0026,-0.001,0.0062,False
+R1 weighting,8.0,0.0,8,0.9504,0.6446,True,0.0022,-0.0016049999999999999,0.0064,0.0022,-0.0016,0.006004999999999973,False
+R1 weighting,16.0,0.0,8,0.95046,0.6456,True,0.0032,-0.0008,0.0072,0.0032,-0.0006,0.007,True
+R2 spreading,0.0,0.25,6,0.94938,0.641,True,-0.0014,-0.007,0.004,-0.0014,-0.006804999999999999,0.0042,False
+R2 spreading,0.0,0.5,10,0.95104,0.6406,True,-0.0018,-0.0058,0.002,-0.0018,-0.0056,0.0018,False
+R2 spreading,0.0,1.0,8,0.94966,0.6346,True,-0.0078,-0.0128,-0.002795000000000027,-0.0078,-0.013,-0.0028,False

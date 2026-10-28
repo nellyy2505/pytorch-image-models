@@ -44,6 +44,7 @@ print("chosen weight decay:", wd)
 t0 = time.time()
 model, history = train(linear, X_train, y_train, FULL_EPOCHS, by_val_top1, val, wd)
 history.to_csv(OUT / "linear_history.csv", index=False)
+torch.save({"state": model.state_dict(), "mean": mean, "std": std}, OUT / "linear_model.pt")    # for 08b
 final = {"weight_decay": wd, "best_epoch": int(history.loc[history.kept, "epoch"].iloc[0]),
          "train_rows": len(y_train), "train_seconds": time.time() - t0, "device": DEVICE}
 

@@ -8,7 +8,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import torch
 
-from common import OUT, SEED, N_CLASSES, CHUNK, SETS, MODELS, DEVICE, BLUE, ORANGE, load, training_split,     training_tensor, standardised, predict, train, accuracy, typicality, save_predictions, read_predictions
+from common import OUT, SEED, N_CLASSES, CHUNK, SETS, MODELS, DEVICE, BLUE, ORANGE, load, training_split, \
+    training_tensor, standardised, predict, train, accuracy, typicality, save_predictions, read_predictions
 
 plt.rcParams.update({"font.size": 11})
 
@@ -52,10 +53,10 @@ def refined_rule(base_val_top1):
     return lambda r: r["val_atypical_top1"] if r["val_top1"] >= base_val_top1 - MAX_VAL_DROP else -np.inf
 
 
-def gain_ci(correct_ref, correct_base):
+def gain_ci(correct_ref, correct_base, gen=rng):
     # paired bootstrap of the atypical top-1 difference
     diff = (correct_ref.astype(float) - correct_base)[atypical]
-    boot = [diff[rng.integers(0, len(diff), len(diff))].mean() for _ in range(DRAWS)]
+    boot = [diff[gen.integers(0, len(diff), len(diff))].mean() for _ in range(DRAWS)]
     return diff.mean(), *np.percentile(boot, [2.5, 97.5])
 
 
@@ -65,20 +66,33 @@ model, history = train(linear, X_small, y_small, TUNE_EPOCHS, lambda r: r["val_t
                        val_masks={"atypical": atypical})
 base_correct = predict(model, val[0])[:, 0] == val[1]
 base = history[history.kept].iloc[0]
+# like-for-like baseline: the same unweighted run, with its epoch kept by the refined settings' rule
+model, history = train(linear, X_small, y_small, TUNE_EPOCHS, refined_rule(base.val_top1), val, a.weight_decay,
+                       val_masks={"atypical": atypical})
+same_correct = predict(model, val[0])[:, 0] == val[1]
+same = history[history.kept].iloc[0]
+rng_same = np.random.default_rng(SEED + 1)      # separate stream, so the original intervals are unchanged
 grid = [{"setting": "baseline (classifier A on train_small)", "beta": 0.0, "gamma": 0.0,
-         "kept_epoch": int(base.epoch), "val_top1": base.val_top1, "val_atypical_top1": base.val_atypical_top1}]
+         "kept_epoch": int(base.epoch), "val_top1": base.val_top1, "val_atypical_top1": base.val_atypical_top1},
+        {"setting": "baseline, epoch kept by the refined rule", "beta": 0.0, "gamma": 0.0,
+         "kept_epoch": int(same.epoch), "val_top1": same.val_top1, "val_atypical_top1": same.val_atypical_top1,
+         "meets_rule": bool(same.meets_rule)}]
 for name, beta, gamma in SETTINGS:
     weights = atypicality_weights(lambda i: raw_small[i:i + CHUNK], y_small, beta) if beta > 0 else None
     model, history = train(linear, X_small, y_small, TUNE_EPOCHS, refined_rule(base.val_top1), val,
                            a.weight_decay, weights, gamma, {"atypical": atypical})
     kept = history[history.kept].iloc[0]
     gain, lo, hi = gain_ci(predict(model, val[0])[:, 0] == val[1], base_correct)
+    correct_ref = predict(model, val[0])[:, 0] == val[1]
+    gain_s, lo_s, hi_s = gain_ci(correct_ref, same_correct, rng_same)
     grid.append({"setting": name, "beta": beta, "gamma": gamma, "kept_epoch": int(kept.epoch),
                  "val_top1": kept.val_top1, "val_atypical_top1": kept.val_atypical_top1, "atypical_gain": gain,
-                 "gain_ci_low": lo, "gain_ci_high": hi, "meets_rule": bool(kept.meets_rule)})
+                 "gain_ci_low": lo, "gain_ci_high": hi, "meets_rule": bool(kept.meets_rule),
+                 "gain_like_for_like": gain_s, "like_ci_low": lo_s, "like_ci_high": hi_s})
 grid = pd.DataFrame(grid)
 # best atypical top-1 among the settings that meet the rule (all settings if none does)
-candidates = grid[grid.meets_rule.eq(True)] if grid.meets_rule.eq(True).any() else grid.iloc[1:]
+refined = grid.iloc[2:]
+candidates = refined[refined.meets_rule.eq(True)] if refined.meets_rule.eq(True).any() else refined
 chosen = candidates.loc[candidates.val_atypical_top1.idxmax()]
 grid["chosen"] = grid.index == chosen.name
 grid.to_csv(OUT / "refine_grid.csv", index=False)

@@ -4,10 +4,13 @@ import os
 import time
 from pathlib import Path
 
+import importlib.util
+
 import numpy as np
 import pandas as pd
 import torch
 from scipy import sparse
+from threadpoolctl import threadpool_limits
 
 ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "data" / "raw"
@@ -87,6 +90,11 @@ def read_predictions(model, s):
     return df[[f"pred{k}" for k in range(1, 6)]].to_numpy()
 
 
+def centroid_scores(Z, C, cosine):
+    # nearest-centroid score per class (06, 08b); Euclidean is -|z - c|^2 / 2 without |z|^2, the same for every class
+    return unit(Z) @ C.T if cosine else Z @ C.T - 0.5 * (C ** 2).sum(axis=1)
+
+
 # 4. Neural classifiers (A linear, B MLP, refinement) share one training loop; GPU if there is one
 os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")             # for deterministic cuBLAS
 torch.use_deterministic_algorithms(True)
@@ -164,3 +172,25 @@ def train(make_model, X, y, epochs, choose, val, weight_decay, weights=None, spr
     history["kept"] = history.index == best
     model.load_state_dict(states[int(history.epoch[best])])
     return model, history
+
+
+# 5. k-means on train_small (07), single-threaded so that every run gives the same clusters
+def kmeans_train_small(X_small, k, others=(), n_components=128):
+    from sklearn.cluster import KMeans
+    from sklearn.decomposition import PCA
+    with threadpool_limits(limits=1):
+        pca = PCA(n_components=n_components, random_state=SEED).fit(X_small)
+        km = KMeans(n_clusters=k, n_init=3, random_state=SEED).fit(pca.transform(X_small))
+        assigned = [km.predict(pca.transform(X)) for X in others]
+    return pca, km, assigned
+
+
+def imagenet_info():
+    # folder with ImageNet class names: timm/data/_info in a timm clone, or in an installed timm package
+    local = ROOT / "timm" / "data" / "_info"
+    if local.exists():
+        return local
+    spec = importlib.util.find_spec("timm")
+    if spec is None:
+        raise FileNotFoundError("ImageNet class names not found: run inside a timm clone or pip install timm")
+    return Path(spec.origin).parent / "data" / "_info"

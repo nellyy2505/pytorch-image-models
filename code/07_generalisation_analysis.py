@@ -9,11 +9,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from PIL import Image
 from scipy import stats
-from sklearn.cluster import KMeans
-from sklearn.decomposition import PCA
 
-from common import ROOT, PROC, OUT, SEED, N_CLASSES, MODELS, BLUE, ORANGE, GREY, load, class_sums, \
-    typicality, typicality_label_free, read_predictions
+from common import PROC, OUT, SEED, N_CLASSES, MODELS, BLUE, ORANGE, GREY, load, class_sums, \
+    typicality, typicality_label_free, read_predictions, kmeans_train_small, imagenet_info
 
 plt.rcParams.update({"font.size": 11})
 
@@ -35,7 +33,7 @@ X, y = {}, {}
 for t in ("test1", "test2"):
     X[t], y[t] = load(t)
 n = {t: len(y[t]) for t in y}
-info = ROOT / "timm" / "data" / "_info"            # ImageNet class names
+info = imagenet_info()                             # ImageNet class names, shipped with timm
 wnids = (info / "imagenet_synsets.txt").read_text().split()
 lemmas = dict(line.split("\t", 1) for line in (info / "imagenet_synset_to_lemma.txt").read_text().splitlines())
 class_name = np.array([lemmas[w].split(",")[0] for w in wnids])
@@ -224,15 +222,17 @@ print(f"Spearman with training separability: |d| {stats.spearmanr(np.abs(d), eta
 
 
 # 7. k-means clusters of train_small; shares compared within class (images outside their class's usual cluster)
-pca = PCA(n_components=PCA_DIMS, random_state=SEED).fit(X_small)
-kmeans = KMeans(n_clusters=N_CLUSTERS, n_init=3, random_state=SEED).fit(pca.transform(X_small))
-cluster = {t: kmeans.predict(pca.transform(X[t])) for t in y}
+pca, kmeans, assigned = kmeans_train_small(X_small, N_CLUSTERS, [X[t] for t in y], PCA_DIMS)
+cluster = dict(zip(y, assigned))
 usual = pd.Series(kmeans.labels_).groupby(y_small).agg(lambda s: s.value_counts().index[0]).to_numpy()
 outside = {t: cluster[t] != usual[y[t]] for t in y}
 table = [[outside[t].sum(), (~outside[t]).sum()] for t in y]
 chi2, p_out = stats.chi2_contingency(table)[:2]
 print(f"\nimages outside their class's usual cluster: test1 {outside['test1'].mean():.1%}, "
       f"test2 {outside['test2'].mean():.1%} (chi-squared {chi2:.0f}, p = {p_out:.2g})")
+pd.DataFrame({"test_set": list(y), "images": [n[t] for t in y], "outside": [int(outside[t].sum()) for t in y],
+              "share_outside": [outside[t].mean() for t in y], "chi2": chi2, "p_value": p_out}
+             ).to_csv(OUT / "gen_cluster_outside.csv", index=False)
 
 clusters = []
 for k in range(N_CLUSTERS):

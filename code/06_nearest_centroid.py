@@ -9,7 +9,7 @@ from sklearn.decomposition import PCA
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 
 from common import OUT, SEED, N_CLASSES, CHUNK, SETS, BLUE, ORANGE, GREY, load, training_split, class_sums, unit, \
-    accuracy, save_predictions
+    accuracy, save_predictions, centroid_scores
 
 plt.rcParams.update({"font.size": 11})
 
@@ -33,13 +33,8 @@ def fit_centroids(Z, y, cosine):
 
 
 def predict_top5(Z, C, cosine):
-    # Euclidean score -|z - c|^2 / 2 without the |z|^2 term, which is the same for every class
-    top5 = []
-    for i in range(0, len(Z), CHUNK):
-        Zb = Z[i:i + CHUNK]
-        scores = unit(Zb) @ C.T if cosine else Zb @ C.T - 0.5 * (C ** 2).sum(axis=1)
-        top5.append(np.argsort(-scores, axis=1)[:, :5])
-    return np.vstack(top5)
+    return np.vstack([np.argsort(-centroid_scores(Z[i:i + CHUNK], C, cosine), axis=1)[:, :5]
+                      for i in range(0, len(Z), CHUNK)])
 
 
 # 3. Variants: a transform fitted on train_small + Euclidean or cosine distance, scored on our validation set
@@ -111,6 +106,7 @@ for i in range(0, len(train_idx), CHUNK):
     counts += np.bincount(y_full[rows], minlength=N_CLASSES)
 C = sums / counts[:, None]
 C = unit(C) if cosine else C
+np.savez(OUT / "centroid_model.npz", centroids=C, cosine=cosine, model=chosen)     # for 08b
 final = {"model": chosen, "train_rows": len(train_idx), "train_seconds": time.time() - t0}
 
 
